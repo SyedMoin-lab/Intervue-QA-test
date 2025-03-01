@@ -1,170 +1,218 @@
-# Intervue.io Login Test Automation
+Got it! Here's a **professional and well-structured GitHub README** with a detailed explanation of the code, why each component is used, and clear setup instructions.
 
-Hey there! 👋 This repo contains a simple Selenium script to test the login functionality on intervue.io. It'll navigate to the site, try to log in, and take screenshots if anything goes wrong.
+---
 
-## What You'll Need
+### **README.md**
 
-- Python 3.6 or newer
-- A web browser (Chrome is recommended, but Firefox and Edge work too)
-- A bit of patience with Selenium (it can be finicky sometimes!)
+```md
+# 🛠️ Automated Web Test for Intervue.io - Selenium with Python
 
-## Getting Started
+This repository contains an **automated web test** using **Selenium and Python** to validate the login functionality of [Intervue.io](https://www.intervue.io).
 
-### Setting Up Your Environment
+The script:
 
-1. **Clone this repo**
-   ```
-   git clone https://github.com/SyedMoin-Lab/intervue-login-test
-   cd intervue-login-test
-   ```
+- Opens **Intervue.io**
+- Navigates to the **login page**
+- Attempts login with provided credentials
+- Captures a **screenshot** if the login fails
+- Closes the browser after execution
 
-2. **Create a virtual environment** (keeps things clean)
-   ```
-   python -m venv venv
-   
-   # On Windows:
-   venv\Scripts\activate
-   
-   # On Mac/Linux:
-   source venv/bin/activate
-   ```
+This project is designed for **QA automation testing**, ensuring the login mechanism functions as expected.
 
-3. **Install Selenium**
-   ```
-   pip install selenium==4.15.2
-   ```
+---
 
-4. **Get the right WebDriver**
-   
-   You'll need the driver that matches your browser:
-   
-   - **Chrome users (recommended)**:
-     1. Check your Chrome version (Menu → Help → About Google Chrome)
-     2. Download matching ChromeDriver from [here](https://sites.google.com/chromium.org/driver/)
-     3. Extract it somewhere in your PATH (or you can specify the location in the code)
+## 📌 **Project Structure**
+```
 
-   - **Firefox users**:
-     - Grab GeckoDriver from [here](https://github.com/mozilla/geckodriver/releases)
-   
-   - **Edge users**:
-     - Download EdgeDriver from [here](https://developer.microsoft.com/en-us/microsoft-edge/tools/webdriver/)
+📂 intervue-qa-test/
+├── test_intervue.py # Main automation script
+├── requirements.txt # Python dependencies
+├── README.md # Project documentation
+├── screenshots/ # Folder to store failure screenshots
 
-### Setting Up Your Test Credentials
+````
 
-Open `intervue_test.py` and find this part at the bottom:
+---
+
+## 🚀 **Setup & Installation**
+
+### 1️⃣ **Clone This Repository**
+```sh
+git clone https://github.com/yourusername/intervue-qa-test.git
+cd intervue-qa-test
+````
+
+### 2️⃣ **Install Dependencies**
+
+Ensure you have Python installed, then run:
+
+```sh
+pip install -r requirements.txt
+```
+
+### 3️⃣ **Install WebDriver (Chrome)**
+
+Selenium requires a **WebDriver** to automate the browser.
+
+- Download **ChromeDriver**: [Download Here](https://sites.google.com/chromium.org/driver/)
+- Place it in the project directory **OR** add it to your system **PATH**
+
+🔹 Want to use **Edge** or **Firefox**? Install the respective WebDriver:
+
+- **Edge**: [Microsoft Edge WebDriver](https://developer.microsoft.com/en-us/microsoft-edge/tools/webdriver/)
+- **Firefox**: [GeckoDriver](https://github.com/mozilla/geckodriver/releases)
+
+---
+
+## ▶️ **Run the Script**
+
+Execute the script using:
+
+```sh
+python test_intervue.py
+```
+
+💡 **Example with Arguments**
+
+```sh
+python test_intervue.py --email test@example.com --password wrongpassword
+```
+
+---
+
+## 📌 **Code Breakdown & Explanation**
+
+### 🔹 **1. Initializing the WebDriver**
 
 ```python
-if __name__ == "__main__":
-    # Replace these with your test credentials
-    test_email = "test@example.com"
-    test_password = "wrongpassword"
-    
-    test = IntervueTest(browser="chrome")
-    test.run_test(test_email, test_password)
+if browser.lower() == "chrome":
+    self.driver = webdriver.Chrome()
+elif browser.lower() == "firefox":
+    self.driver = webdriver.Firefox()
+elif browser.lower() == "edge":
+    self.driver = webdriver.Edge()
+else:
+    raise ValueError(f"Unsupported browser: {browser}")
 ```
 
-Change the email and password to whatever you want to test with.
+📌 **Why?**
 
-## Running the Test
+- This ensures flexibility by allowing different browsers (Chrome, Firefox, Edge).
+- If an unsupported browser is passed, an error is raised.
 
-With your virtual environment activated, just run:
+---
 
-```
-python intervue_test.py
-```
-
-Then sit back and watch as:
-1. A browser window opens
-2. It navigates to intervue.io
-3. It clicks the login button
-4. It enters your credentials and submits
-5. It checks if the login worked
-6. It takes a screenshot if there were problems
-7. It closes the browser
-
-## How the Code Works
-
-Let me walk you through the main parts of the script:
-
-### Browser Setup
-
-```python
-def __init__(self, browser="chrome"):
-    # This part starts up your chosen browser
-    if browser.lower() == "chrome":
-        self.driver = webdriver.Chrome()
-    # Firefox and Edge options also available
-    
-    self.driver.maximize_window()  # Full-screen mode
-```
-
-### Website Navigation
+### 🔹 **2. Opening the Website**
 
 ```python
 def open_website(self):
-    # Opens intervue.io in your browser
     self.driver.get("https://www.intervue.io")
+    print("Website opened successfully")
 ```
 
-### Finding the Login Button
+📌 **Why?**
+
+- This function loads the Intervue.io website using **Selenium's `get()` method**.
+
+---
+
+### 🔹 **3. Navigating to Login Page**
 
 ```python
 def navigate_to_login(self):
-    # Waits for page to load
-    # Finds and clicks the login button
     login_button = WebDriverWait(self.driver, 10).until(
         EC.element_to_be_clickable((By.XPATH, "//a[contains(text(), 'Login') or contains(@class, 'login')]"))
     )
     login_button.click()
+    print("Navigated to login page")
 ```
 
-### Logging In
+📌 **Why?**
+
+- Uses **Explicit Wait** to ensure the login button is clickable before clicking.
+- Uses **XPath selectors** to dynamically locate the login button.
+
+---
+
+### 🔹 **4. Attempting Login**
 
 ```python
-def attempt_login(self, email, password):
-    # Finds email field, types your email
-    email_field = self.driver.find_element(By.XPATH, "//input[@type='email' or @name='email' or @id='email']")
-    email_field.send_keys(email)
-    
-    # Finds password field, types your password
-    password_field = self.driver.find_element(By.XPATH, "//input[@type='password' or @name='password' or @id='password']")
-    password_field.send_keys(password)
-    
-    # Clicks submit
-    submit_button = self.driver.find_element(By.XPATH, "//button[@type='submit' or contains(text(), 'Sign in')]")
-    submit_button.click()
+email_field = self.driver.find_element(By.XPATH, "//input[@type='email']")
+password_field = self.driver.find_element(By.XPATH, "//input[@type='password']")
+submit_button = self.driver.find_element(By.XPATH, "//button[@type='submit']")
 ```
 
-### Taking Screenshots
+📌 **Why?**
+
+- Locates **email** and **password fields** dynamically using XPath.
+- Uses `send_keys()` to input credentials.
+
+---
+
+### 🔹 **5. Capturing Screenshot on Failure**
 
 ```python
 def take_screenshot(self, filename):
-    # Saves a picture of what the browser is showing
     self.driver.save_screenshot(filename)
+    print(f"Screenshot saved as {filename}")
 ```
 
-## Troubleshooting Tips
+📌 **Why?**
 
-### If the script can't find elements:
+- If login fails, the script captures the current screen state and saves it as an image for debugging.
 
-1. **The website might have changed**
-   - Open intervue.io and use browser inspection tools (F12) to check the actual element IDs/classes
-   - Update the XPath selectors in the code
+📌 **Example Screenshot File:**
 
-2. **WebDriver is outdated**
-   - Make sure your WebDriver version matches your browser version
+```
+📂 intervue-qa-test/
+   ├── login_button_not_found_20250301-091259.png  👈 Saved screenshot of failed login
+```
 
-3. **Timing issues**
-   - Try increasing the wait times in the code from 10 seconds to something higher
+---
 
-### If the browser crashes:
+## 📸 **Screenshot Handling**
 
-1. **Make sure the WebDriver is compatible with your system**
-2. **Try running with a different browser**:
-   ```python
-   test = IntervueTest(browser="firefox")
-   ```
+🔹 The script saves screenshots in the **screenshots/** directory with a timestamped filename:
 
-## Need Help?
+```sh
+login_failed_20250228-153000.png
+```
 
-If you're stuck, feel free to open an issue in this repo. Happy testing! 🚀
+🔹 This helps **QA teams** analyze why the login failed.
+
+---
+
+## 🔧 **Customization**
+
+🔹 **Modify Login Credentials**  
+Edit `test_intervue.py` and update:
+
+```python
+test_email = "your-email@example.com"
+test_password = "your-password"
+```
+
+🔹 **Use a Different Browser**  
+Change `"chrome"` to `"firefox"` or `"edge"` in:
+
+```python
+test = IntervueTest(browser="chrome")
+```
+
+---
+
+## ❌ **Troubleshooting**
+
+| Issue                        | Solution                                                                                    |
+| ---------------------------- | ------------------------------------------------------------------------------------------- |
+| `WebDriverNotFoundException` | Ensure **ChromeDriver** is installed and in the system **PATH**.                            |
+| `ElementNotFoundException`   | The website structure might have changed. Update **XPath selectors** in `test_intervue.py`. |
+| `TimeoutException`           | Increase wait times using `WebDriverWait(driver, 15)` if the website is slow.               |
+
+---
+
+🚀 Happy Testing!
+
+```
+
+```
