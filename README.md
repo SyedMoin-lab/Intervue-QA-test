@@ -1,10 +1,3 @@
-Got it! Here's a **professional and well-structured GitHub README** with a detailed explanation of the code, why each component is used, and clear setup instructions.
-
----
-
-### **README.md**
-
-```md
 # 🛠️ Automated Web Test for Intervue.io - Selenium with Python
 
 This repository contains an **automated web test** using **Selenium and Python** to validate the login functionality of [Intervue.io](https://www.intervue.io).
@@ -22,6 +15,7 @@ This project is designed for **QA automation testing**, ensuring the login mecha
 ---
 
 ## 📌 **Project Structure**
+
 ```
 
 📂 intervue-qa-test/
@@ -30,17 +24,18 @@ This project is designed for **QA automation testing**, ensuring the login mecha
 ├── README.md # Project documentation
 ├── screenshots/ # Folder to store failure screenshots
 
-````
+```
 
 ---
 
 ## 🚀 **Setup & Installation**
 
 ### 1️⃣ **Clone This Repository**
+
 ```sh
 git clone https://github.com/yourusername/intervue-qa-test.git
 cd intervue-qa-test
-````
+```
 
 ### 2️⃣ **Install Dependencies**
 
@@ -212,7 +207,3 @@ test = IntervueTest(browser="chrome")
 ---
 
 🚀 Happy Testing!
-
-```
-
-```
